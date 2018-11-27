@@ -11,6 +11,31 @@
     <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript">
         <!--菜单处理-->
+        $(function () {
+            $.ajax({
+                url: "getMenu",
+                type: post,
+                success: function (data) {
+                    alert("menu")
+                    for (var v = 0; v < data.length; v++) {
+                        var two = "";
+                        for (var i = 0; i < data[v].menuList.length; i++) {
+                            two += data[v].menuList[i].title;
+                        }
+                        $("#aa").accordion("add", {
+                            title: data[v].title,
+                            content: two,
+                            selected: false
+                        })
+                    }
+
+                }
+            })
+        })
+
+
+
+
 
 
     </script>

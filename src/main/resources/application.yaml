@@ -23,5 +23,5 @@ spring:
       charset: utf-8
       force: true
 mybatis:
-  type-aliases-package: com.baizhi.entity
+  #type-aliases-package: com.baizhi.entity
   mapper-locations: com/baizhi/dao/*Dao.xml
