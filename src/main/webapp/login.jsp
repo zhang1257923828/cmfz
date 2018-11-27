@@ -1,4 +1,5 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>持名法州后台管理中心</title>
@@ -16,22 +17,20 @@
 
         $(function () {
             //点击更换验证码：
-            $("#captchaImage").click(function () {//点击更换验证码
-                alert("自己做");
+            // alert(1)
+            $("#chknumber").validatebox({
+                required: true,
+                missingMessage: "验证码不能为空",
             });
 
-            //  form 表单提交
-            $("#loginForm").bind("submit", function () {
-                alert("自己做");
-                return false;
-            });
         });
+
     </script>
 </head>
 <body>
 
 <div class="login">
-    <form id="loginForm" action="../back/index.html" method="post">
+    <form action="${pageContext.request.contextPath}/login" method="post" target='_blank'>
 
         <table>
             <tbody>
@@ -43,7 +42,7 @@
                     用户名:
                 </th>
                 <td>
-                    <input type="text" name="user.name" class="text" value="xxx" maxlength="20"/>
+                    <input type="text" name="name" class="text" value="" maxlength="20"/>
                 </td>
             </tr>
             <tr>
@@ -51,17 +50,19 @@
                     密&nbsp;&nbsp;&nbsp;码:
                 </th>
                 <td>
-                    <input type="password" name="user.password" class="text" value="xxx" maxlength="20"
+                    <input type="password" name="password" class="text" value="" maxlength="20"
                            autocomplete="off"/>
                 </td>
             </tr>
 
-            <tr>
+            <tr class="chknumber">
                 <td>&nbsp;</td>
                 <th>验证码:</th>
                 <td>
-                    <input type="text" id="enCode" name="enCode" class="text captcha" maxlength="4" autocomplete="off"/>
-                    <img id="captchaImage" class="captchaImage" src="img/captcha.jpg" title="点击更换验证码"/>
+                    <input name="code" type="text" id="chknumber" maxlength="4" class="chknumber_input"/>
+                    </label><img width="50" height="30" src="${pageContext.request.contextPath}/getKaptcha"
+                                 id="imgVcode"
+                                 onclick="document.getElementById('imgVcode').src='${pageContext.request.contextPath}/getKaptcha?time='+(new Date()).getTime();"/>
                 </td>
             </tr>
             <tr>
@@ -76,9 +77,8 @@
                 <td>&nbsp;</td>
                 <th>&nbsp;</th>
                 <td>
-                    <input type="button" class="homeButton" value="" onclick="location.href='/'"><input type="submit"
-                                                                                                        class="loginButton"
-                                                                                                        value="登录">
+                    <input type="button" class="homeButton" value=""><input type="submit" class="loginButton"
+                                                                            value="登录">
                 </td>
             </tr>
             </tbody>
