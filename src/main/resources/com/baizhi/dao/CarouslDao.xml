@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce的值是dao接口的全限定名 -->
+<mapper namespace="com.baizhi.dao.CarouselDao">
+    <!-- 查询全部-->
+    <select id="getByPage" resultType="Carousel">
+    select * from carouse  limit #{start},#{end}
+  </select>
+    <!--统计-->
+    <select id="getCount" resultType="int">
+        select count(*) from carouse
+    </select>
+    <!--查询单个-->
+    <select id="selectOne" resultType="Carousel">
+       select * from carouse where id=#{id}
+    </select>
+    <!-- 添加-->
+    <insert id="insert">
+        insert into carouse VALUES(0,#{title},#{imgPath},#{desc},#{status},SYSDATE())
+    </insert>
+    <!-- 删除-->
+    <delete id="delete">
+        delete from carouse where id=#{id}
+    </delete>
+    <!-- 修改-->
+    <update id="update">
+    update carouse SET status=#{status} where id=#{id}
+    </update>
+</mapper>

@@ -4,35 +4,72 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>持名法州主页</title>
-    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="../themes/IconExtension.css">
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/IconExtension.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.edatagrid.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript">
         <!--菜单处理-->
         $(function () {
             $.ajax({
                 url: "getMenu",
-                type: post,
+                type: "post",
                 success: function (data) {
-                    alert("menu")
-                    for (var v = 0; v < data.length; v++) {
-                        var two = "";
-                        for (var i = 0; i < data[v].menuList.length; i++) {
-                            two += data[v].menuList[i].title;
-                        }
-                        $("#aa").accordion("add", {
-                            title: data[v].title,
-                            content: two,
-                            selected: false
+                    $.each(data, function (index, first) {
+                        var c = "";
+                        $.each(first.menuList, function (index1, second) {
+                            c += "<p style='text-align: center'><a id=\"btn\" href=\"#\" class=\"easyui-linkbutton\" onclick=\"addTabs('" + second.title + "','" + second.url + "','" + second.iconCls + "')\" data-options=\"iconCls:'icon-search'\">" + second.title + "</a></p>";
                         })
-                    }
+                        $("#aa").accordion("add", {
+                            title: first.title,
+                            content: c,
+                            selected: false
+                        });
+                    })
+
+                    //var date= data.list;
+                    /* for (var v = 0; v < data.length; v++) {
+                         var two = "";
+                         for (var i = 0; i < data[v].menuList.length; i++) {
+                             two +="<p style='text-align: center'><a id=\"btn\" href=\"#\" class=\"easyui-linkbutton\" onclick=\"addTabs('"+data[v].menuList[i].title+"',+data[v].menuList[i].url+,+data[v].menuList[i].iconCls+)\" data-options=\"iconCls:'icon-search'\">"+ data[v].menuList[i].title+"</a></p>";
+                            // two += data[v].menuList[i].title;
+                         }
+                         $("#aa").accordion("add", {
+                             title: data[v].title,
+                             content: two,
+                             selected: true,
+                             href:"
+                    ${pageContext.request.contextPath}/"+url,
+
+                            closable:true
+                        });
+                    }*/
 
                 }
-            })
-        })
+            });
 
+        });
+
+        function addTabs(title, url, iconCls) {
+            var flat = $("#tt").tabs("exists", title)
+            if (flat) {
+                $("#tt").tabs("select", title)
+            } else {
+                /!*添加选项卡*!/
+                $('#tt').tabs('add', {
+                    title: title,
+                    selected: true,
+                    href: "${pageContext.request.contextPath}/datagrid/" + url,
+                    // content:'<iframe src="${pageContext.request.contextPath}/datagrid/'+url+'" width="100%" height="100%"></iframe>',
+                    iconCls: iconCls,
+                    closable: true
+                });
+            }
+
+        }
 
 
 

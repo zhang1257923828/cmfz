@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
+@RequestMapping("/main")
 public class MenuController {
     @Autowired
     private MenuService menuService;
 
     @RequestMapping("/getMenu")
     public @ResponseBody
-    Map getMenu(Map map) {
+    List getMenu() {
         List<Menu> list = menuService.getMenu();
-        map.put("list", list);
-        return map;
+        System.out.println("菜单打印" + list);
+        return list;
     }
 }
