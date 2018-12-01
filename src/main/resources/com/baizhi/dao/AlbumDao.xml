@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce的值是dao接口的全限定名 -->
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <resultMap id="albumMap" type="Album">
+        <id column="a_id" property="id"/>
+        <result column="a_title" property="title"/>
+        <result column="a_coverImg" property="coverImg"/>
+        <result column="a_count" property="count"/>
+        <result column="a_score" property="score"/>
+        <result column="a_author" property="author"/>
+        <result column="a_broadCast" property="broadCast"/>
+        <result column="a_brief" property="brief"/>
+        <collection property="children" ofType="Chapter">
+            <id column="id" property="id"/>
+            <result column="parentId" property="parentId"/>
+            <result column="title" property="title"/>
+            <result column="size" property="size"/>
+            <result column="duration" property="duration"/>
+            <result column="downPath" property="downPath"/>
+        </collection>
+    </resultMap>
+
+    <!-- 查询全部-->
+    <select id="selectAll" resultMap="albumMap">
+        select a.id a_id,a.title a_title,a.author a_author,a.brief a_brief,a.coverImg a_coverImg, c.*
+     FROM album a left JOIN chapter c
+    on a.id=c.parentId
+  </select>
+
+
+    <insert id="insert">
+INSERT into album VALUES(0,#{title},#{coverImg},#{count},#{score},#{author},#{broadCast},#{brief},SYSDATE())
+    </insert>
+
+</mapper>
